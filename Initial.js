@@ -1,7 +1,7 @@
-console.log("Hello from node");
+// console.log("Hello from node");
 
 // Import which allows to write files to system
-const fileSystem = require("fs");
+// const fileSystem = require("fs");
 
 // write file sync from import
 
@@ -11,4 +11,4 @@ const fileSystem = require("fs");
  * second one is content
  */
 
-fileSystem.writeFileSync("test.txt", "Hello from fs of node");
+// fileSystem.writeFileSync("test.txt", "Hello from fs of node");
