@@ -14,7 +14,7 @@ const fs = require("fs");
  * after ending res via end, res should nnot be altered
  */
 const server = http.createServer((req, res) => {
-  console.log(req);
+  // console.log(req);
 
   const messageHTML =
     "<html> <head><title>Node Test</title></head> <body>Hello from Node server</body> </html>";
@@ -22,10 +22,6 @@ const server = http.createServer((req, res) => {
 
   const inputHTML =
     " <html> <form action = '/message' method = 'POST'><input type ='text' name ='value'> <button type = 'submit'>Send</button></form> </html>";
-  // res.write("<html> ");
-  // res.write("<head><title>My first webpage via node server</title></head>");
-  // res.write("<body>Hello from Node server</body>");
-  // res.write("</html> ");
 
   // get url from response
   const { url, method } = req;
@@ -36,7 +32,27 @@ const server = http.createServer((req, res) => {
   }
 
   if (url === "/message" && method === "POST") {
-    fs.writeFileSync("datafromServer.txt", "TEST");
+    // adding a listener on req to get chunks of data
+    // this listener listens for every change in chunk of data
+
+    const body = [];
+    req.on("data", (incomingData) => {
+      console.log(incomingData, "incomingData");
+      body.push(incomingData);
+      console.log(body, "body");
+    });
+
+    // stop the listener
+
+    req.on("end", () => {
+      // to change binary to readable we use buffer
+      const completedMessage = Buffer.concat(body).toString();
+      console.log(completedMessage);
+
+      const message = completedMessage.split("=")[1];
+      fs.writeFileSync("datafromServer.txt", message);
+    });
+
     res.statusCode = 302;
     res.setHeader("Location", "/");
     return res.end();
