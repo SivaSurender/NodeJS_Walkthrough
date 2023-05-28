@@ -43,7 +43,7 @@ const requestHandler = (req, res) => {
       fs.writeFile("dataFromServer", message, (err) => {
         // execcute this block once all done
         res.statusCode = 302;
-        res.setHeader("Location", "/");
+        res.setHeader("Location", "/message");
         return res.end();
       });
     });
