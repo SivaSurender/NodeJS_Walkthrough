@@ -10,4 +10,5 @@ const fileSystem = require("fs");
  *  first one is file name anbd type, path
  * second one is content
  */
+
 fileSystem.writeFileSync("test.txt", "Hello from fs of node");
